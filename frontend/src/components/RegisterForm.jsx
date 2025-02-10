@@ -1,45 +1,9 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+const { VITE_API_URL } = import.meta.env;
 
 export const RegisterForm = () => {
-	// const navigate = useNavigate();
-	// const { handleSession } = useAuth();
-	// const [loading, setLoading] = useState(false);
-
-	// const [register, setRegister] = useState({
-	// 	username: '',
-	// 	email: '',
-	// 	password: '',
-	// });
-
-	// const handleSumbit = async (event) => {
-	// 	event.preventDefault();
-
-	// 	const newUser = await fetch(`${VITE_API_URL}/api/auth/register`, {
-	// 		method: 'POST',
-	// 		headers: {
-	// 			'Content-Type': 'application/json',
-	// 		},
-	// 		body: JSON.stringify(register),
-	// 	});
-
-	// 	const response = await newUser.json();
-
-	// 	handleSession(response);
-	// 	navigate('/login');
-	// };
-
-	// const handleOnChange = (event) => {
-	// 	const { name, value } = event.target;
-
-	// 	setRegister({
-	// 		...register,
-	// 		[name]: value,
-	// 	});
-	// };
-	// const { handleSession } = useAuth();
-
 	const [user, setUser] = useState({
 		email: '',
 		password: '',
@@ -61,7 +25,7 @@ export const RegisterForm = () => {
 	};
 
 	const handleRegister = async (user) => {
-		return fetch('http://localhost:3001/api/auth/register', {
+		return fetch(`${VITE_API_URL}/api/auth/register`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
