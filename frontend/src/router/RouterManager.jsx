@@ -1,7 +1,6 @@
 import { useAuth } from '../hooks/useAuth';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { MainLayout } from '../layouts/MainLayout';
-import { AuthGuard } from '../guard/Authguard';
 import { AdminLayout } from '../layouts/AdminLayout';
 import { Page404 } from '../pages/Page404';
 import { CartPage } from '../pages/CartPage';
@@ -13,6 +12,7 @@ import { DashboardPage } from '../pages/DashboardPage';
 import { RegisterPage } from '../pages/RegisterPage';
 import { SuccessPage } from '../pages/SuccessPage';
 import { ROLES } from '../helpers/roles';
+import AuthGuard from '../guard/AuthGuard';
 
 export const RouterManager = () => {
 	const { session } = useAuth();

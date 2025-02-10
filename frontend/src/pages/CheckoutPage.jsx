@@ -20,9 +20,7 @@ const { Text, Title } = Typography;
 const { VITE_STRIPE_PUBLIC_KEY } = import.meta.env;
 
 export const CheckoutPage = () => {
-	const stripePromise = loadStripe(
-		'pk_test_51QoYHUCloO1uA1HGLgYp5bQ3EExJ7RkxdCMEUmzEwss5F5B5ZxIUUfXYohFMahpbcv27f0TyPAi7ogCAPljBiL4v00SVMAbPBJ'
-	);
+	const stripePromise = loadStripe(String(VITE_STRIPE_PUBLIC_KEY));
 
 	const { cart } = useCart();
 
