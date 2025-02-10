@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 const { VITE_API_URL } = import.meta.env;
 

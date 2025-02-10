@@ -3,64 +3,13 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 export const LoginForm = () => {
-	// const { handleSession } = useAuth();
-	// const navigate = useNavigate();
-
-	// const [login, setLogin] = useState({
-	// 	email: '',
-	// 	password: '',
-	// });
-
-	// const handleSumbit = async (event) => {
-	// 	event.preventDefault();
-
-	// 	const newUser = await fetch(`${VITE_API_URL}/api/auth/login`, {
-	// 		method: 'POST',
-	// 		headers: {
-	// 			'Content-Type': 'application/json',
-	// 		},
-	// 		body: JSON.stringify(login),
-	// 	});
-
-	// 	const { token } = await newUser.json();
-	// 	const payload = JSON.parse(atob(token.split('.')[1]));
-
-	// 	setLogin((prevState) => {
-	// 		const newState = {
-	// 			...prevState,
-	// 			token: token,
-	// 			...payload,
-	// 		};
-	// 		return newState;
-	// 	});
-
-	// 	setTimeout(() => {
-	// 		navigate(`/profile`);
-	// 	}, 1000);
-	// };
-
-	// useEffect(() => {
-	// 	if (login.email && login.password) {
-	// 		handleSession(login);
-	// 	}
-	// }, [login]);
-
-	// const handleOnChange = (event) => {
-	// 	const { name, value } = event.target;
-
-	// 	setLogin({
-	// 		...login,
-	// 		[name]: value,
-	// 	});
-	// };
-	const { handleSession, session } = useAuth();
+	const { handleSession } = useAuth();
+	const navigate = useNavigate();
 
 	const [login, setLogin] = useState({
 		email: '',
 		password: '',
 	});
-
-	const [error, setError] = useState(false);
 
 	const handleOnChange = (event) => {
 		const { name, value } = event.target;
@@ -70,22 +19,44 @@ export const LoginForm = () => {
 		});
 	};
 
-	const navigate = useNavigate();
-
-	const handleSubmit = (event) => {
+	const handleSumbit = async (event) => {
 		event.preventDefault();
 
-		if (session.email === login.email && session.password === login.password) {
-			handleSession(session);
-			navigate('/admin');
-		} else {
-			setError(true);
-		}
+		const userSession = await fetch(`${VITE_API_URL}/api/auth/login`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(login),
+		});
+
+		console.log(userSession, 'User session');
+		handleSession(userSession);
+		// const payload = JSON.parse(atob(token.split('.')[1]));
+
+		// setLogin((prevState) => {
+		// 	const newState = {
+		// 		...prevState,
+		// 		token: token,
+		// 		...payload,
+		// 	};
+		// 	return newState;
+		// });
+
+		setTimeout(() => {
+			navigate(`/profile`);
+		}, 1000);
 	};
+
+	// useEffect(() => {
+	// 	if (login.email && login.password) {
+	// 		handleSession(login);
+	// 	}
+	// }, [login]);
 
 	return (
 		<form
-			onSubmit={handleSubmit}
+			onSubmit={handleSumbit}
 			className="space-y-4"
 		>
 			<div>
