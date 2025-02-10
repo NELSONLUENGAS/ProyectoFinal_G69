@@ -52,7 +52,7 @@ export const CartPage = () => {
 				<div style={{ marginTop: '24px', textAlign: 'right' }}>
 					<Title level={4}>Total: ${total}</Title>
 					<Button
-						type="primary"
+						type="link"
 						size="large"
 					>
 						Proceed to Checkout

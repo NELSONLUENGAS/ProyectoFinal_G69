@@ -16,8 +16,8 @@ import { ROLES } from '../helpers/roles';
 
 export const RouterManager = () => {
 	const { session } = useAuth();
-	console.log(session, 'User session');
-	console.log(!session?.token, 'condicion');
+	// console.log(session, 'User session');
+	// console.log(!session?.token, 'condicion');
 
 	return (
 		<Router>

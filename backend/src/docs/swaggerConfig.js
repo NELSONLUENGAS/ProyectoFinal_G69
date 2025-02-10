@@ -1,19 +1,19 @@
-const swaggerJsdoc = require('swagger-jsdoc');
-const schemas = require('./swaggerSchemas');
+const swaggerJsDoc = require('swagger-jsdoc');
+const { schemas } = require('./swaggerSchemas');
 
 const options = {
 	definition: {
 		openapi: '3.0.0',
 		info: {
-			title: 'API de Usuarios',
+			title: 'Api Backend',
 			version: '1.0.0',
-			description: 'Documentación de la API con Swagger',
+			description: 'Documentación API con swagger',
 		},
 		components: {
-			securitySchemes: {
+			securitySchemas: {
 				bearerAuth: {
 					type: 'http',
-					scheme: 'bearer',
+					schema: 'bearer',
 					bearerFormat: 'JWT',
 				},
 			},
@@ -24,14 +24,8 @@ const options = {
 	apis: [],
 };
 
-const specs = swaggerJsdoc(options);
+const specs = swaggerJsDoc(options);
 
-/**
- * Función para registrar rutas en Swagger de manera modular
- * @param {string} path - Ruta del endpoint
- * @param {string} method - Método HTTP (get, post, etc.)
- * @param {object} config - Configuración del endpoint (summary, tags, responses, etc.)
- */
 const addSwaggerPath = (path, method, config, requiresAuth = false) => {
 	if (!specs.paths[path]) {
 		specs.paths[path] = {};
@@ -44,4 +38,7 @@ const addSwaggerPath = (path, method, config, requiresAuth = false) => {
 	specs.paths[path][method] = config;
 };
 
-module.exports = { specs, addSwaggerPath };
+module.exports = {
+	specs,
+	addSwaggerPath,
+};

@@ -14,51 +14,30 @@ import {
 	Spin,
 } from 'antd';
 import { useCallback } from 'react';
+import { useCart } from '../hooks/useCart';
 const { Text, Title } = Typography;
+
+const { VITE_STRIPE_PUBLIC_KEY } = import.meta.env;
 
 export const CheckoutPage = () => {
 	const stripePromise = loadStripe(
-		'pk_test_51OybZCJeiIjQLCHnAwDTdRvPv9josrDoNeeQ8YziGWf9Rtl5BObkx4ZiQSVdqTMYptq5nqpfLF84Vf8G36iWKWld00bxahWKxs'
+		'pk_test_51QoYHUCloO1uA1HGLgYp5bQ3EExJ7RkxdCMEUmzEwss5F5B5ZxIUUfXYohFMahpbcv27f0TyPAi7ogCAPljBiL4v00SVMAbPBJ'
 	);
 
-	// Simulated Cart Data
-	const cart = [
-		{
-			name: 'Producto 1',
-			price: 10.99,
-			image: 'https://via.placeholder.com/150',
-			quantity: 5,
-		},
-		{
-			name: 'Producto 2',
-			price: 24.99,
-			image: 'https://via.placeholder.com/150',
-			quantity: 10,
-		},
-		{
-			name: 'Producto 3',
-			price: 7.5,
-			image: 'https://via.placeholder.com/150',
-			quantity: 3,
-		},
-		{
-			name: 'Producto 4',
-			price: 15.75,
-			image: 'https://via.placeholder.com/150',
-			quantity: 8,
-		},
-	];
+	const { cart } = useCart();
 
 	const fetchClientSecret = useCallback(() => {
-		// return fetch('http://127.0.0.1:3001/create-checkout-session', {
-		// 	method: 'POST',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 	},
-		// 	body: JSON.stringify({ cart }),
-		// })
-		// 	.then((res) => res.json())
-		// 	.then((data) => data.clientSecret);
+		return fetch('http://localhost:3001/api/gateways/create-checkout-session', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify([...cart]),
+		})
+			.then((res) => res.json())
+			.then((session) => {
+				return session.data.clientSecret;
+			});
 	}, [cart]);
 
 	const options = { fetchClientSecret };

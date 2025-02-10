@@ -38,12 +38,9 @@ export const RegisterForm = () => {
 	// 		[name]: value,
 	// 	});
 	// };
-	const { handleSession } = useAuth();
+	// const { handleSession } = useAuth();
 
 	const [user, setUser] = useState({
-		token: 'token user secret',
-		role: 'admin',
-		username: '',
 		email: '',
 		password: '',
 	});
@@ -58,11 +55,22 @@ export const RegisterForm = () => {
 
 	const navigate = useNavigate();
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-		handleSession(user);
+		await handleRegister(user);
+	};
 
-		navigate('/admin');
+	const handleRegister = async (user) => {
+		return fetch('http://localhost:3001/api/auth/register', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ email: user.email, password: user.password }),
+		})
+			.then((res) => res.json())
+			.then((registeredUser) => navigate('/login'))
+			.catch((error) => console.log(error));
 	};
 
 	return (
@@ -70,21 +78,6 @@ export const RegisterForm = () => {
 			onSubmit={handleSubmit}
 			className="space-y-4"
 		>
-			<div>
-				<label
-					htmlFor="username"
-					className="block text-sm font-medium text-gray-700"
-				>
-					Username
-				</label>
-				<input
-					onChange={handleOnChange}
-					type="text"
-					id="username"
-					name="username"
-					className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
-				/>
-			</div>
 			<div>
 				<label
 					htmlFor="email"

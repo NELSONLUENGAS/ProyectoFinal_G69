@@ -1,19 +1,21 @@
 const schemas = {
-	User: {
+	Evento: {
 		type: 'object',
 		properties: {
 			id: { type: 'integer', example: 1 },
-			name: { type: 'string', example: 'Juan Pérez' },
-			email: { type: 'string', example: 'juan@example.com' },
+			name: { type: 'string', example: 'Desarrollo de software' },
+			place: { type: 'string', example: 'Santiago Chile' },
 		},
 	},
 	Error: {
 		type: 'object',
 		properties: {
-			message: { type: 'string', example: 'Error de validación' },
+			message: { type: 'string', example: 'Error en los datos' },
 			code: { type: 'integer', example: 400 },
 		},
 	},
 };
 
-module.exports = schemas;
+module.exports = {
+	schemas,
+};
