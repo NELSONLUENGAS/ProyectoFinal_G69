@@ -17,7 +17,7 @@ import { useCallback } from 'react';
 import { useCart } from '../hooks/useCart';
 const { Text, Title } = Typography;
 
-const { VITE_STRIPE_PUBLIC_KEY } = import.meta.env;
+const { VITE_STRIPE_PUBLIC_KEY, VITE_API_URL } = import.meta.env;
 
 export const CheckoutPage = () => {
 	const stripePromise = loadStripe(String(VITE_STRIPE_PUBLIC_KEY));
@@ -25,7 +25,7 @@ export const CheckoutPage = () => {
 	const { cart } = useCart();
 
 	const fetchClientSecret = useCallback(() => {
-		return fetch('http://localhost:3001/api/gateways/create-checkout-session', {
+		return fetch(`${VITE_API_URL}/api/gateways/create-checkout-session`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
