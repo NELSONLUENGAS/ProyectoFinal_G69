@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export const LoginForm = () => {
 	const { handleSession } = useAuth();
 	const navigate = useNavigate();
+	const [error, setError] = useState(null);
 
 	const [login, setLogin] = useState({
 		email: '',
@@ -21,31 +22,24 @@ export const LoginForm = () => {
 
 	const handleSumbit = async (event) => {
 		event.preventDefault();
+		try {
+			const userSession = await fetch(`${VITE_API_URL}/api/auth/login`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(login),
+			});
 
-		const userSession = await fetch(`${VITE_API_URL}/api/auth/login`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(login),
-		});
+			console.log(userSession, 'User session');
+			handleSession(userSession);
 
-		console.log(userSession, 'User session');
-		handleSession(userSession);
-		// const payload = JSON.parse(atob(token.split('.')[1]));
-
-		// setLogin((prevState) => {
-		// 	const newState = {
-		// 		...prevState,
-		// 		token: token,
-		// 		...payload,
-		// 	};
-		// 	return newState;
-		// });
-
-		setTimeout(() => {
-			navigate(`/profile`);
-		}, 1000);
+			setTimeout(() => {
+				navigate(`/profile`);
+			}, 1000);
+		} catch (error) {
+			setError(error.message);
+		}
 	};
 
 	// useEffect(() => {
