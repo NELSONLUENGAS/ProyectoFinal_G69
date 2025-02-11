@@ -92,13 +92,13 @@ export const LoginForm = () => {
 				</button>
 			</div>
 
-			{/* {error && (
+			{error && (
 				<div>
 					<p className="text-center font-bold text-red-500">
 						Credenciales erroneas
 					</p>
 				</div>
-			)} */}
+			)}
 		</form>
 	);
 };
