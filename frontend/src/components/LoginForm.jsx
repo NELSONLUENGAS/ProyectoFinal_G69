@@ -38,6 +38,7 @@ export const LoginForm = () => {
 				navigate(`/profile`);
 			}, 1000);
 		} catch (error) {
+			console.log(error);
 			setError(error.message);
 		}
 	};
