@@ -5,6 +5,7 @@ const personalRoutes = require('./personal.routes');
 const authRoutes = require('./auth.routes');
 const eventosRoutes = require('./eventos.routes');
 const gatewaysRoutes = require('./gateways.routes');
+const uploadRoutes = require('./upload.routes');
 
 const app = express();
 
@@ -14,5 +15,6 @@ app.use('/personal', personalRoutes);
 app.use('/auth', authRoutes);
 app.use('/eventos', eventosRoutes);
 app.use('/gateways', gatewaysRoutes);
+app.use('/uploads', uploadRoutes);
 
 module.exports = app;
